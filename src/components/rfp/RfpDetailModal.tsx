@@ -3,9 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Sparkles, Loader2, Calendar, DollarSign, User, Globe, Users } from "lucide-react";
+import { Sparkles, Loader2, Calendar, DollarSign, User, Globe, Users, Target } from "lucide-react";
 import { useRfpDraft } from "@/hooks/useRfpDraft";
 import { PartnerOutreachTab } from "./PartnerOutreachTab";
+import { BidScoreTab } from "./BidScoreTab";
 import type { Database } from "@/integrations/supabase/types";
 import { format } from "date-fns";
 
@@ -42,10 +43,11 @@ export function RfpDetailModal({ rfp, open, onOpenChange }: RfpDetailModalProps)
         </DialogHeader>
 
         <Tabs defaultValue="overview" className="mt-4">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="flex flex-wrap">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sections">Sections</TabsTrigger>
             <TabsTrigger value="draft">Draft</TabsTrigger>
+            <TabsTrigger value="bid-score">Bid Score</TabsTrigger>
             <TabsTrigger value="partners">Partners</TabsTrigger>
             <TabsTrigger value="team">Team</TabsTrigger>
             <TabsTrigger value="budget">Budget</TabsTrigger>
@@ -145,6 +147,10 @@ export function RfpDetailModal({ rfp, open, onOpenChange }: RfpDetailModalProps)
             ) : (
               <p className="text-sm text-muted-foreground italic">No draft yet. Click "Generate Draft" to create one with AI.</p>
             )}
+          </TabsContent>
+
+          <TabsContent value="bid-score" className="mt-4">
+            <BidScoreTab rfpId={rfp.id} currentScore={rfp.bid_no_bid_score} />
           </TabsContent>
 
           <TabsContent value="partners" className="mt-4">

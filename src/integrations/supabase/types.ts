@@ -47,6 +47,44 @@ export type Database = {
         }
         Relationships: []
       }
+      bid_score_criteria: {
+        Row: {
+          company_id: string
+          created_at: string
+          criterion_name: string
+          description: string | null
+          id: string
+          sort_order: number
+          weight: number
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          criterion_name: string
+          description?: string | null
+          id?: string
+          sort_order?: number
+          weight?: number
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          criterion_name?: string
+          description?: string | null
+          id?: string
+          sort_order?: number
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bid_score_criteria_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           created_at: string
@@ -88,6 +126,60 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      deadline_events: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          event_date: string
+          event_type: Database["public"]["Enums"]["deadline_event_type"]
+          id: string
+          reminder_days_before: number[] | null
+          reminders_sent: Json | null
+          rfp_id: string | null
+          title: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          event_date: string
+          event_type?: Database["public"]["Enums"]["deadline_event_type"]
+          id?: string
+          reminder_days_before?: number[] | null
+          reminders_sent?: Json | null
+          rfp_id?: string | null
+          title: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          event_date?: string
+          event_type?: Database["public"]["Enums"]["deadline_event_type"]
+          id?: string
+          reminder_days_before?: number[] | null
+          reminders_sent?: Json | null
+          rfp_id?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deadline_events_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deadline_events_rfp_id_fkey"
+            columns: ["rfp_id"]
+            isOneToOne: false
+            referencedRelation: "rfps"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       discovered_rfps: {
         Row: {
@@ -693,6 +785,7 @@ export type Database = {
         | "certification"
         | "past_performance"
         | "compliance"
+      deadline_event_type: "deadline" | "milestone" | "review" | "custom"
       draft_status: "draft" | "final"
       partner_outreach_status:
         | "pending"
@@ -838,6 +931,7 @@ export const Constants = {
         "past_performance",
         "compliance",
       ],
+      deadline_event_type: ["deadline", "milestone", "review", "custom"],
       draft_status: ["draft", "final"],
       partner_outreach_status: [
         "pending",

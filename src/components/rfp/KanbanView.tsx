@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, DollarSign } from "lucide-react";
+import { Calendar, DollarSign, Target } from "lucide-react";
 import { format } from "date-fns";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -87,6 +87,12 @@ export function KanbanView({ rfps, onStageChange, onClickRfp }: KanbanViewProps)
                           <span className="flex items-center gap-1">
                             <DollarSign className="h-3 w-3" />
                             {Number(rfp.bid_amount).toLocaleString()}
+                          </span>
+                        )}
+                        {rfp.bid_no_bid_score != null && (
+                          <span className={`flex items-center gap-1 ${rfp.bid_no_bid_score >= 70 ? "text-success" : rfp.bid_no_bid_score >= 40 ? "text-warning" : "text-destructive"}`}>
+                            <Target className="h-3 w-3" />
+                            {rfp.bid_no_bid_score}%
                           </span>
                         )}
                       </div>
