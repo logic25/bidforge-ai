@@ -89,6 +89,110 @@ export type Database = {
         }
         Relationships: []
       }
+      discovered_rfps: {
+        Row: {
+          added_to_pipeline: boolean
+          agency: string | null
+          company_id: string
+          created_at: string
+          deadline: string | null
+          description: string | null
+          id: string
+          is_dismissed: boolean
+          match_reason: string | null
+          relevance_score: number | null
+          rfp_id: string | null
+          source_url: string | null
+          title: string
+          value_estimate: number | null
+        }
+        Insert: {
+          added_to_pipeline?: boolean
+          agency?: string | null
+          company_id: string
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          is_dismissed?: boolean
+          match_reason?: string | null
+          relevance_score?: number | null
+          rfp_id?: string | null
+          source_url?: string | null
+          title: string
+          value_estimate?: number | null
+        }
+        Update: {
+          added_to_pipeline?: boolean
+          agency?: string | null
+          company_id?: string
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          is_dismissed?: boolean
+          match_reason?: string | null
+          relevance_score?: number | null
+          rfp_id?: string | null
+          source_url?: string | null
+          title?: string
+          value_estimate?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discovered_rfps_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discovered_rfps_rfp_id_fkey"
+            columns: ["rfp_id"]
+            isOneToOne: false
+            referencedRelation: "rfps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_email_templates: {
+        Row: {
+          body: string
+          company_id: string
+          created_at: string
+          id: string
+          name: string
+          subject: string
+          template_type: string
+        }
+        Insert: {
+          body: string
+          company_id: string
+          created_at?: string
+          id?: string
+          name: string
+          subject: string
+          template_type?: string
+        }
+        Update: {
+          body?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          subject?: string
+          template_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_email_templates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -120,6 +224,97 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfi_requests: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          project_name: string
+          questions: Json
+          recipient_email: string | null
+          recipient_name: string | null
+          responded_at: string | null
+          response_data: Json | null
+          response_token: string | null
+          sent_at: string | null
+          status: Database["public"]["Enums"]["rfi_status"]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          project_name: string
+          questions?: Json
+          recipient_email?: string | null
+          recipient_name?: string | null
+          responded_at?: string | null
+          response_data?: Json | null
+          response_token?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["rfi_status"]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          project_name?: string
+          questions?: Json
+          recipient_email?: string | null
+          recipient_name?: string | null
+          responded_at?: string | null
+          response_data?: Json | null
+          response_token?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["rfi_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfi_requests_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfi_templates: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          is_default: boolean
+          name: string
+          questions: Json
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_default?: boolean
+          name: string
+          questions?: Json
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_default?: boolean
+          name?: string
+          questions?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfi_templates_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
@@ -167,6 +362,104 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfp_monitoring_rules: {
+        Row: {
+          agency_filter: string[] | null
+          company_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          keywords: string[] | null
+          max_value: number | null
+          min_value: number | null
+          notify_email: string | null
+        }
+        Insert: {
+          agency_filter?: string[] | null
+          company_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          keywords?: string[] | null
+          max_value?: number | null
+          min_value?: number | null
+          notify_email?: string | null
+        }
+        Update: {
+          agency_filter?: string[] | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          keywords?: string[] | null
+          max_value?: number | null
+          min_value?: number | null
+          notify_email?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_monitoring_rules_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfp_partner_outreach: {
+        Row: {
+          company_id: string
+          id: string
+          partner_email: string
+          partner_name: string
+          responded_at: string | null
+          response_data: Json | null
+          response_token: string | null
+          rfp_id: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["partner_outreach_status"]
+        }
+        Insert: {
+          company_id: string
+          id?: string
+          partner_email: string
+          partner_name: string
+          responded_at?: string | null
+          response_data?: Json | null
+          response_token?: string | null
+          rfp_id: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["partner_outreach_status"]
+        }
+        Update: {
+          company_id?: string
+          id?: string
+          partner_email?: string
+          partner_name?: string
+          responded_at?: string | null
+          response_data?: Json | null
+          response_token?: string | null
+          rfp_id?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["partner_outreach_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_partner_outreach_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfp_partner_outreach_rfp_id_fkey"
+            columns: ["rfp_id"]
+            isOneToOne: false
+            referencedRelation: "rfps"
             referencedColumns: ["id"]
           },
         ]
@@ -240,6 +533,50 @@ export type Database = {
             columns: ["rfp_id"]
             isOneToOne: false
             referencedRelation: "rfps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfp_sources: {
+        Row: {
+          check_frequency: string
+          company_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_checked: string | null
+          name: string
+          source_type: string
+          url: string
+        }
+        Insert: {
+          check_frequency?: string
+          company_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_checked?: string | null
+          name: string
+          source_type?: string
+          url: string
+        }
+        Update: {
+          check_frequency?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_checked?: string | null
+          name?: string
+          source_type?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_sources_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
         ]
@@ -357,6 +694,13 @@ export type Database = {
         | "past_performance"
         | "compliance"
       draft_status: "draft" | "final"
+      partner_outreach_status:
+        | "pending"
+        | "sent"
+        | "viewed"
+        | "responded"
+        | "declined"
+      rfi_status: "draft" | "sent" | "viewed" | "responded"
       rfp_stage: "draft" | "review" | "submitted" | "won" | "lost"
     }
     CompositeTypes: {
@@ -495,6 +839,14 @@ export const Constants = {
         "compliance",
       ],
       draft_status: ["draft", "final"],
+      partner_outreach_status: [
+        "pending",
+        "sent",
+        "viewed",
+        "responded",
+        "declined",
+      ],
+      rfi_status: ["draft", "sent", "viewed", "responded"],
       rfp_stage: ["draft", "review", "submitted", "won", "lost"],
     },
   },
