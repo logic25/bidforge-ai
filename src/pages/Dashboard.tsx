@@ -1,4 +1,5 @@
 import { useRfps } from "@/hooks/useRfps";
+import { DashboardSkeleton } from "@/components/LoadingSkeletons";
 import { useDiscovery } from "@/hooks/useDiscovery";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -58,11 +59,7 @@ export default function Dashboard() {
     .slice(0, 10);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-12">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   return (
