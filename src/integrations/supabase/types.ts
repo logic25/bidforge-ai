@@ -127,6 +127,191 @@ export type Database = {
           },
         ]
       }
+      rfp_content: {
+        Row: {
+          category: Database["public"]["Enums"]["content_category"]
+          company_id: string
+          content: string | null
+          created_at: string
+          id: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          usage_count: number
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["content_category"]
+          company_id: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          usage_count?: number
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["content_category"]
+          company_id?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          usage_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_content_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfp_response_drafts: {
+        Row: {
+          content: Json | null
+          created_at: string
+          id: string
+          rfp_id: string
+          status: Database["public"]["Enums"]["draft_status"]
+          version: number
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string
+          id?: string
+          rfp_id: string
+          status?: Database["public"]["Enums"]["draft_status"]
+          version?: number
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string
+          id?: string
+          rfp_id?: string
+          status?: Database["public"]["Enums"]["draft_status"]
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_response_drafts_rfp_id_fkey"
+            columns: ["rfp_id"]
+            isOneToOne: false
+            referencedRelation: "rfps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfp_sections: {
+        Row: {
+          ai_suggested_response: string | null
+          content: string | null
+          created_at: string
+          id: string
+          rfp_id: string
+          section_order: number
+          title: string
+        }
+        Insert: {
+          ai_suggested_response?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          rfp_id: string
+          section_order?: number
+          title: string
+        }
+        Update: {
+          ai_suggested_response?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          rfp_id?: string
+          section_order?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfp_sections_rfp_id_fkey"
+            columns: ["rfp_id"]
+            isOneToOne: false
+            referencedRelation: "rfps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfps: {
+        Row: {
+          agency: string | null
+          bid_amount: number | null
+          bid_decision: string | null
+          bid_no_bid_score: number | null
+          company_id: string
+          contact_email: string | null
+          contact_name: string | null
+          created_at: string
+          deadline: string | null
+          description: string | null
+          id: string
+          notes: string | null
+          source_url: string | null
+          stage: Database["public"]["Enums"]["rfp_stage"]
+          title: string
+          updated_at: string
+          win_loss_reason: string | null
+        }
+        Insert: {
+          agency?: string | null
+          bid_amount?: number | null
+          bid_decision?: string | null
+          bid_no_bid_score?: number | null
+          company_id: string
+          contact_email?: string | null
+          contact_name?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          notes?: string | null
+          source_url?: string | null
+          stage?: Database["public"]["Enums"]["rfp_stage"]
+          title: string
+          updated_at?: string
+          win_loss_reason?: string | null
+        }
+        Update: {
+          agency?: string | null
+          bid_amount?: number | null
+          bid_decision?: string | null
+          bid_no_bid_score?: number | null
+          company_id?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          notes?: string | null
+          source_url?: string | null
+          stage?: Database["public"]["Enums"]["rfp_stage"]
+          title?: string
+          updated_at?: string
+          win_loss_reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rfps_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -164,6 +349,15 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "member"
+      content_category:
+        | "boilerplate"
+        | "case_study"
+        | "team_bio"
+        | "certification"
+        | "past_performance"
+        | "compliance"
+      draft_status: "draft" | "final"
+      rfp_stage: "draft" | "review" | "submitted" | "won" | "lost"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -292,6 +486,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "member"],
+      content_category: [
+        "boilerplate",
+        "case_study",
+        "team_bio",
+        "certification",
+        "past_performance",
+        "compliance",
+      ],
+      draft_status: ["draft", "final"],
+      rfp_stage: ["draft", "review", "submitted", "won", "lost"],
     },
   },
 } as const

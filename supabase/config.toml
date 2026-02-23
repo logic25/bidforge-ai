@@ -1,1 +1,7 @@
 project_id = "hyofyikkfjvehgxexvmz"
+
+[functions.extract-rfp]
+verify_jwt = false
+
+[functions.generate-rfp-cover-letter]
+verify_jwt = false
