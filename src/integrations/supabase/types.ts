@@ -804,6 +804,7 @@ export type Database = {
           is_active: boolean
           last_checked: string | null
           name: string
+          source_agency_id: string | null
           source_type: string
           url: string
         }
@@ -815,6 +816,7 @@ export type Database = {
           is_active?: boolean
           last_checked?: string | null
           name: string
+          source_agency_id?: string | null
           source_type?: string
           url: string
         }
@@ -826,6 +828,7 @@ export type Database = {
           is_active?: boolean
           last_checked?: string | null
           name?: string
+          source_agency_id?: string | null
           source_type?: string
           url?: string
         }
@@ -835,6 +838,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rfp_sources_source_agency_id_fkey"
+            columns: ["source_agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
             referencedColumns: ["id"]
           },
         ]

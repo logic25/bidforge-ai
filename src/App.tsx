@@ -15,6 +15,7 @@ import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import Pipeline from "./pages/Pipeline";
 import Discovery from "./pages/Discovery";
+import Agencies from "./pages/Agencies";
 import Library from "./pages/Library";
 import RFI from "./pages/RFI";
 import Templates from "./pages/Templates";
@@ -43,6 +44,7 @@ const App = () => (
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/pipeline" element={<Pipeline />} />
                 <Route path="/discovery" element={<Discovery />} />
+                <Route path="/agencies" element={<Agencies />} />
                 <Route path="/library" element={<Library />} />
                 <Route path="/rfi" element={<RFI />} />
                 <Route path="/templates" element={<Templates />} />
