@@ -12,6 +12,7 @@ import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2 } from "lucide-react";
+import { BillingCard } from "@/components/billing/BillingCard";
 
 export default function Settings() {
   const { user } = useAuth();
@@ -163,15 +164,7 @@ export default function Settings() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Billing</CardTitle>
-          <CardDescription>Manage your subscription</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm">Coming Soon — Billing management will be available here.</p>
-        </CardContent>
-      </Card>
+      <BillingCard />
     </div>
   );
 }
