@@ -247,6 +247,172 @@ export type Database = {
           },
         ]
       }
+      marketplace_purchases: {
+        Row: {
+          buyer_company_id: string
+          buyer_id: string
+          created_at: string
+          id: string
+          price_paid: number
+          stripe_payment_id: string | null
+          template_id: string
+        }
+        Insert: {
+          buyer_company_id: string
+          buyer_id: string
+          created_at?: string
+          id?: string
+          price_paid?: number
+          stripe_payment_id?: string | null
+          template_id: string
+        }
+        Update: {
+          buyer_company_id?: string
+          buyer_id?: string
+          created_at?: string
+          id?: string
+          price_paid?: number
+          stripe_payment_id?: string | null
+          template_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_purchases_buyer_company_id_fkey"
+            columns: ["buyer_company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_purchases_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_purchases_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketplace_reviews: {
+        Row: {
+          created_at: string
+          id: string
+          rating: number
+          review_text: string | null
+          reviewer_id: string
+          template_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          rating: number
+          review_text?: string | null
+          reviewer_id: string
+          template_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          rating?: number
+          review_text?: string | null
+          reviewer_id?: string
+          template_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_reviews_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketplace_templates: {
+        Row: {
+          author_id: string
+          avg_rating: number | null
+          category: string
+          company_id: string
+          content: Json | null
+          created_at: string
+          description: string | null
+          download_count: number
+          id: string
+          industry_tags: string[] | null
+          preview_content: Json | null
+          price: number
+          status: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          avg_rating?: number | null
+          category?: string
+          company_id: string
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          download_count?: number
+          id?: string
+          industry_tags?: string[] | null
+          preview_content?: Json | null
+          price?: number
+          status?: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          avg_rating?: number | null
+          category?: string
+          company_id?: string
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          download_count?: number
+          id?: string
+          industry_tags?: string[] | null
+          preview_content?: Json | null
+          price?: number
+          status?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_templates_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_templates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_email_templates: {
         Row: {
           body: string
