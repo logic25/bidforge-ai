@@ -20,6 +20,7 @@ import CalendarPage from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import RfiResponse from "./pages/RfiResponse";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
+            <Route path="/rfi/:token" element={<RfiResponse />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

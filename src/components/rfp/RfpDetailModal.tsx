@@ -3,8 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Sparkles, Loader2, Calendar, DollarSign, User, Globe } from "lucide-react";
+import { Sparkles, Loader2, Calendar, DollarSign, User, Globe, Users } from "lucide-react";
 import { useRfpDraft } from "@/hooks/useRfpDraft";
+import { PartnerOutreachTab } from "./PartnerOutreachTab";
 import type { Database } from "@/integrations/supabase/types";
 import { format } from "date-fns";
 
@@ -41,10 +42,11 @@ export function RfpDetailModal({ rfp, open, onOpenChange }: RfpDetailModalProps)
         </DialogHeader>
 
         <Tabs defaultValue="overview" className="mt-4">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sections">Sections</TabsTrigger>
             <TabsTrigger value="draft">Draft</TabsTrigger>
+            <TabsTrigger value="partners">Partners</TabsTrigger>
             <TabsTrigger value="team">Team</TabsTrigger>
             <TabsTrigger value="budget">Budget</TabsTrigger>
             <TabsTrigger value="compliance">Compliance</TabsTrigger>
@@ -143,6 +145,10 @@ export function RfpDetailModal({ rfp, open, onOpenChange }: RfpDetailModalProps)
             ) : (
               <p className="text-sm text-muted-foreground italic">No draft yet. Click "Generate Draft" to create one with AI.</p>
             )}
+          </TabsContent>
+
+          <TabsContent value="partners" className="mt-4">
+            <PartnerOutreachTab rfpId={rfp.id} />
           </TabsContent>
 
           <TabsContent value="team" className="mt-4">

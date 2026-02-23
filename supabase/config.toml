@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.generate-rfp-cover-letter]
 verify_jwt = false
+
+[functions.monitor-rfps]
+verify_jwt = false
+
+[functions.rfp-partner-response]
+verify_jwt = false
