@@ -193,10 +193,35 @@ export default function Discovery() {
           </DialogHeader>
           <div className="space-y-6 mt-4">
             {/* Sources */}
+          {/* Agency Sources */}
             <div>
-              <h3 className="text-sm font-semibold mb-3">Monitoring Sources</h3>
+              <h3 className="text-sm font-semibold mb-3">Agency Sources</h3>
               <div className="space-y-2 mb-3">
-                {sources.map((s) => (
+                {sources.filter((s) => (s as any).source_type === "agency").map((s) => (
+                  <div key={s.id} className="flex items-center justify-between rounded-lg border p-3">
+                    <div>
+                      <p className="text-sm font-medium">{s.name}</p>
+                      <p className="text-xs text-muted-foreground truncate max-w-xs">{s.url}</p>
+                      {s.last_checked && <p className="text-xs text-muted-foreground">Last scanned: {format(new Date(s.last_checked), "MMM d, h:mm a")}</p>}
+                    </div>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => deleteSource.mutate(s.id)}>
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+                {sources.filter((s) => (s as any).source_type === "agency").length === 0 && (
+                  <p className="text-xs text-muted-foreground">No agency sources yet. <a href="/agencies" className="text-primary underline">Add agencies →</a></p>
+                )}
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Custom Sources */}
+            <div>
+              <h3 className="text-sm font-semibold mb-3">Custom Sources</h3>
+              <div className="space-y-2 mb-3">
+                {sources.filter((s) => (s as any).source_type !== "agency").map((s) => (
                   <div key={s.id} className="flex items-center justify-between rounded-lg border p-3">
                     <div>
                       <p className="text-sm font-medium">{s.name}</p>

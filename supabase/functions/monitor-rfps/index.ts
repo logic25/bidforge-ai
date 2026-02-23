@@ -23,12 +23,27 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-    // Get all active sources
-    const { data: sources, error: srcErr } = await supabase
+    // Check if a specific source_id was provided (for single agency scan)
+    let body: any = {};
+    try {
+      body = await req.json();
+    } catch {
+      // No body = scan all sources
+    }
+
+    const specificSourceId = body?.source_id;
+
+    // Get sources to scan
+    let sourcesQuery = supabase
       .from("rfp_sources")
       .select("*, companies!inner(id, keywords, industries, states)")
       .eq("is_active", true);
 
+    if (specificSourceId) {
+      sourcesQuery = sourcesQuery.eq("id", specificSourceId);
+    }
+
+    const { data: sources, error: srcErr } = await sourcesQuery;
     if (srcErr) throw srcErr;
 
     let totalDiscovered = 0;
@@ -128,7 +143,6 @@ serve(async (req) => {
 
         // Score relevance and insert
         for (const rfp of rfps) {
-          // Simple keyword-based scoring
           const text = `${rfp.title} ${rfp.description || ""} ${rfp.agency || ""}`.toLowerCase();
           let score = 0;
           for (const kw of allKeywords) {
@@ -139,6 +153,9 @@ serve(async (req) => {
           const matchReasons = allKeywords
             .filter((kw: string) => text.includes(kw.toLowerCase()))
             .map((kw: string) => `Matches keyword: ${kw}`);
+
+          // Use source name as agency if agency-type source
+          const agencyName = rfp.agency || (source.source_type === "agency" ? source.name : source.name);
 
           // Check for duplicates
           const { data: existing } = await supabase
@@ -153,7 +170,7 @@ serve(async (req) => {
           await supabase.from("discovered_rfps").insert({
             company_id: source.company_id,
             title: rfp.title,
-            agency: rfp.agency || source.name,
+            agency: agencyName,
             description: rfp.description,
             source_url: source.url,
             relevance_score: score,

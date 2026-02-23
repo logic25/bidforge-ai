@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   KanbanSquare,
   Search,
+  Building2,
   BookOpen,
   FileQuestion,
   LayoutTemplate,
@@ -32,6 +33,7 @@ const mainItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Pipeline", url: "/pipeline", icon: KanbanSquare },
   { title: "Discovery", url: "/discovery", icon: Search },
+  { title: "Agencies", url: "/agencies", icon: Building2 },
   { title: "Content Library", url: "/library", icon: BookOpen },
   { title: "RFI Manager", url: "/rfi", icon: FileQuestion },
 ];
