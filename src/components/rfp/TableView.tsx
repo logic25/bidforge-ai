@@ -77,7 +77,13 @@ export function TableView({ rfps, onClickRfp }: TableViewProps) {
                 <TableCell>{rfp.deadline ? format(new Date(rfp.deadline), "MMM d, yyyy") : "—"}</TableCell>
                 <TableCell><Badge className={stageColors[rfp.stage]}>{rfp.stage}</Badge></TableCell>
                 <TableCell>{rfp.bid_amount ? `$${Number(rfp.bid_amount).toLocaleString()}` : "—"}</TableCell>
-                <TableCell>{rfp.bid_no_bid_score ?? "—"}</TableCell>
+                <TableCell>
+                  {rfp.bid_no_bid_score != null ? (
+                    <Badge className={rfp.bid_no_bid_score >= 70 ? "bg-success/10 text-success" : rfp.bid_no_bid_score >= 40 ? "bg-warning/10 text-warning" : "bg-destructive/10 text-destructive"}>
+                      {rfp.bid_no_bid_score}%
+                    </Badge>
+                  ) : "—"}
+                </TableCell>
               </TableRow>
             ))
           )}
